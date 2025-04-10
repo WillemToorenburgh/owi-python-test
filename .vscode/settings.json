@@ -1,0 +1,15 @@
+{
+    "nixEnvSelector.nixFile": "${workspaceFolder}/shell.nix",
+    "debugpy.showPythonInlineValues": true,
+    "python.autoComplete.extraPaths": [
+        "/nix/store/idld6asm7vs84202hwal94dxhwzd3lq5-python3-3.12.8-env/lib/python3.12/site-packages"
+    ],
+    "python.terminal.shellIntegration.enabled": true,
+    "python.terminal.activateEnvironment": false,
+    "python.defaultInterpreterPath": "/nix/store/idld6asm7vs84202hwal94dxhwzd3lq5-python3-3.12.8-env/bin/python",
+    "pylint.importStrategy": "fromEnvironment",
+    "pylint.interpreter": [],
+    "pylint.args": [
+        "--disable=C0301"
+    ]
+}
