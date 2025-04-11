@@ -8,6 +8,8 @@ with import <nixpkgs> {}; let
       pylance
       debugpy
       pylint
+      pyinstaller
+      cython
     ]);
 in
   pythonEnv.env
