@@ -225,7 +225,7 @@ def in_desktop_environment():
 
 ### Google API utility methods
 
-def list_drive_files(google_drive_client, query: List[str], fields: List[str], drive_id = False) -> List[dict]:
+def list_drive_files(google_drive_client, query: List[str], fields: List[str], drive_id: str = None) -> List[dict]:
     joined_query = ' and '.join(query)
     joined_fields = ', '.join(["nextPageToken"] + fields)
 
@@ -309,7 +309,7 @@ def escape_google_api_query_string(string: str) -> str:
 
 ### Methods that take actions
 
-def create_drive_folder(google_drive_client, parent_id: str, name: str, drive_id: str = False) -> str:
+def create_drive_folder(google_drive_client, parent_id: str, name: str, drive_id: str = None) -> str:
     metadata = {
         "name": escape_google_api_query_string(name),
         "mimeType": FOLDER_MIME_TYPE,
@@ -338,7 +338,7 @@ def create_drive_folder(google_drive_client, parent_id: str, name: str, drive_id
 
     return folder_id
 
-def create_missing_drive_folders(google_drive_client, parent: str, folders_to_make: List[str], drive_id = False) -> dict:
+def create_missing_drive_folders(google_drive_client, parent: str, folders_to_make: List[str], drive_id: str = None) -> dict:
     """Recursively create folders, returning the details of the final folder in the list.
 
     Returns:
@@ -367,7 +367,7 @@ def create_missing_drive_folders(google_drive_client, parent: str, folders_to_ma
         "type": FOLDER_MIME_TYPE
     }
 
-def upload_drive_file(google_drive_client, source_file_info: dict, destination_file_name: str, parent_id: str, drive_id = False):
+def upload_drive_file(google_drive_client, source_file_info: dict, destination_file_name: str, parent_id: str, drive_id: str = None):
     metadata = {
         "name": destination_file_name,
         "mimeType": source_file_info["guessed_mime_type"],
@@ -429,7 +429,7 @@ def get_source_file_info(source_file_path: str) -> dict:
         "size": file_size
     }
 
-def get_destination_info(google_drive_client, source_file_path: str, destination_path: str, drive_id: str = False) -> tuple:
+def get_destination_info(google_drive_client, source_file_path: str, destination_path: str, drive_id: str = None) -> tuple:
     """Checks the destination Drive for existing directories to use, and whether there are any files with the same name as the file to be uploaded.
     If there are, prepares a new name for the file.
 
@@ -594,15 +594,15 @@ When this program gets new or refreshed token data, it will save that token to a
     if unattended:
         logger.info("Running in unattended mode")
         if myargs.unattended:
-            logger.verbose("Reason: --unattended flag set by user")
+            logger.debug("Reason: --unattended flag set by user")
         if not sys.stdout.isatty():
-            logger.verbose("Reason: No TTY device was detected on stdOut. sys.stdout.isatty() returned False.")
+            logger.debug("Reason: No TTY device was detected on stdOut. sys.stdout.isatty() returned False.")
 
     # Before we do anything too strenuous, let's learn about the source file
     source_file_info = get_source_file_info(myargs.source_file)
 
     # Handle auth:
-    # Get the our credentials
+    # Get our credentials file
     api_credentials = get_google_credentials(myargs.credentials_json_path)
 
     # Get the existing token, or None if it doesn't exist
@@ -617,7 +617,7 @@ When this program gets new or refreshed token data, it will save that token to a
     # Create Drive client
     client = build(serviceName = "drive", version = "v3", credentials = token)
 
-    drive_id = False
+    drive_id = None
 
     if not myargs.drive_name == "My Drive":
         drive_id = get_drive_id(client, myargs.drive_name)
