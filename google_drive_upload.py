@@ -305,7 +305,7 @@ def get_drive_id(google_drive_client, drive_name: str, unattended: bool = False)
         sys.exit(1)
 
 def escape_google_api_query_string(string: str) -> str:
-    return string.replace("\\", "\\\\").replace("'", "\'")
+    return string.replace("\\", "\\\\").replace("'", "\\'")
 
 ### Methods that take actions
 
