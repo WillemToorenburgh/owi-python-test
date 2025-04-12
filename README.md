@@ -23,7 +23,7 @@ On first run, this tool will guide the user through authenticating with Google. 
 
 ### Generating OAuth credentials
 
-You must provide your own Credentials file. Follow the instructions at [Google's Drive API Python Quickstart](https://developers.google.com/workspace/drive/api/quickstart/python#set-up-environment)'s `Set up your environment` section to generate a new `credentials.json` file. Once you have that file, 
+You must provide your own Credentials file. Follow the instructions at [Google's Drive API Python Quickstart](https://developers.google.com/workspace/drive/api/quickstart/python#set-up-environment)'s `Set up your environment` section to generate a new `credentials.json` file. Once you have that file, place it at `~/.owi/google_drive_uploader/credentials.json` on the machine(s) you want to use this script on.
 
 ### Non-interactive Authentication
 
@@ -63,7 +63,7 @@ I was unable to test the Shared Drives functionality, as I don't have access to 
 ## Future work
 
 * Package the script as a binary.
-    > I actually got this working locally, but only as a dynamic binary, so it wouldn't launch on any machine that wasn't mine. I could probably figure this out given more time.
+    > I actually got this working locally, but only as a dynamic binary, so it wouldn't launch on any machine that wasn't mine. I could probably figure this out given more time. It would really cut down on setup steps!
 * Add support for uploading multiple files.
 * Make sure Shared Drives support actually works!
 * Add support for multi-part uploads.
